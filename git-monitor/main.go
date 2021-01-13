@@ -38,7 +38,7 @@ func CheckGitChange(gitPath string) int {
 	if err := os.Chdir(gitPath); err != nil {
 		return 0
 	}
-	cmd := exec.Command("git", "ls-files", "--exclude-standard", "--others")
+	cmd := exec.Command("git", "status")
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		return 0
@@ -55,12 +55,14 @@ func CheckGitChange(gitPath string) int {
 		return 0
 	}
 
-	if string(opBytes) != "" {
-		log.Printf("[%v] CHANGED", gitPath)
-		return 1
+	content := string(opBytes)
+
+	if strings.Contains(content, "nothing to commit, working tree clean") {
+		return 0
 	}
 
-	return 0
+	log.Printf("[%v] CHANGED", gitPath)
+	return 1
 }
 
 func main() {
