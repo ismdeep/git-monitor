@@ -2,9 +2,9 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -13,7 +13,7 @@ import (
 func LoadGitPathList(path string) (gitPathList []string) {
 	f, err := os.Open(path)
 	if err != nil {
-		log.Println(err.Error())
+		fmt.Println(err.Error())
 		return
 	}
 	defer f.Close()
@@ -61,7 +61,7 @@ func CheckGitChange(gitPath string) int {
 		return 0
 	}
 
-	log.Printf("[%v] CHANGED", gitPath)
+	fmt.Printf("[%v] CHANGED\n", gitPath)
 	return 1
 }
 
@@ -69,7 +69,8 @@ func main() {
 	helpMsg := "Usage: git-monitor <git-path-list-file>"
 
 	if len(os.Args) <= 1 {
-		log.Fatalln(helpMsg)
+		fmt.Println(helpMsg)
+		return
 	}
 
 	gitPathList := LoadGitPathList(os.Args[1])
@@ -81,8 +82,8 @@ func main() {
 	}
 
 	if cnt != 0 {
-		log.Println("--------------------------------------------------")
+		fmt.Println("--------------------------------------------------")
 	} else {
-		log.Println("NO CHANGE FOUND.")
+		fmt.Println("NO CHANGE FOUND.")
 	}
 }
