@@ -1,2 +1,1 @@
-# git-monitor
-Git Monitor
+# Git Monitor
