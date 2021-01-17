@@ -61,7 +61,7 @@ func CheckGitChange(gitPath string) int {
 		return 0
 	}
 
-	fmt.Printf("[%v] CHANGED\n", gitPath)
+	fmt.Printf("GIT REPO CHANGED => %v\n", gitPath)
 	return 1
 }
 
@@ -79,11 +79,5 @@ func main() {
 
 	for _, gitPath := range gitPathList {
 		cnt += CheckGitChange(gitPath)
-	}
-
-	if cnt != 0 {
-		fmt.Println("--------------------------------------------------")
-	} else {
-		fmt.Println("NO CHANGE FOUND.")
 	}
 }
