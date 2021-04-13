@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/ismdeep/args"
 	"io"
 	"io/ioutil"
 	"os"
@@ -65,11 +66,18 @@ func CheckGitChange(gitPath string) int {
 	return 1
 }
 
+func ShowHelpMsg() {
+	fmt.Println("Usage: git-monitor <git-path-list-file>")
+}
+
 func main() {
-	helpMsg := "Usage: git-monitor <git-path-list-file>"
+	if args.Exists("--help") {
+		ShowHelpMsg()
+		return
+	}
 
 	if len(os.Args) <= 1 {
-		fmt.Println(helpMsg)
+		ShowHelpMsg()
 		return
 	}
 
